@@ -23,7 +23,7 @@ permissions:
 jobs:
   update-dependencies:
     name: Update Dependencies
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     
     steps:
       - name: Checkout code
@@ -248,7 +248,7 @@ jobs:
 
   check-outdated:
     name: Check for Outdated Dependencies
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: github.event_name == 'workflow_dispatch'
     
     steps:

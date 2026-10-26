@@ -20,7 +20,7 @@ env:
 jobs:
   check-docs-changes:
     name: Check Documentation Changes
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       docs_changed: ${{ steps.changes.outputs.docs_changed }}
       
@@ -51,7 +51,7 @@ jobs:
 
   build-docs-preview:
     name: Build Documentation Preview
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: check-docs-changes
     if: needs.check-docs-changes.outputs.docs_changed == 'true'
     
@@ -199,7 +199,7 @@ jobs:
 
   cleanup-old-previews:
     name: Cleanup Old Previews
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     if: github.event.action == 'closed'
     
     steps:
@@ -227,7 +227,7 @@ jobs:
 
   docs-link-check:
     name: Documentation Link Check
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: check-docs-changes
     if: needs.check-docs-changes.outputs.docs_changed == 'true'
     
@@ -260,7 +260,7 @@ jobs:
 
   docs-summary:
     name: Documentation Summary
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [check-docs-changes, build-docs-preview, docs-link-check]
     if: always() && needs.check-docs-changes.outputs.docs_changed == 'true'
     

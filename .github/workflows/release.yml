@@ -29,7 +29,7 @@ env:
 jobs:
   validate-release:
     name: Validate Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       version: ${{ steps.version.outputs.version }}
       should_publish: ${{ steps.validation.outputs.should_publish }}
@@ -79,7 +79,7 @@ jobs:
 
   build-and-test:
     name: Build & Test Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: validate-release
     if: needs.validate-release.outputs.should_publish == 'true'
     
@@ -141,7 +141,7 @@ jobs:
 
   publish-testpypi:
     name: Publish to TestPyPI
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [validate-release, build-and-test]
     if: |
       needs.validate-release.outputs.should_publish == 'true' && 
@@ -173,7 +173,7 @@ jobs:
 
   publish-pypi:
     name: Publish to PyPI
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [validate-release, build-and-test]
     if: |
       needs.validate-release.outputs.should_publish == 'true' && 
@@ -207,7 +207,7 @@ jobs:
 
   create-github-release:
     name: Create GitHub Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [validate-release, build-and-test]
     if: |
       needs.validate-release.outputs.should_publish == 'true' && 
@@ -265,7 +265,7 @@ jobs:
 
   update-docker:
     name: Update Docker Image
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [validate-release, publish-pypi]
     if: |
       needs.validate-release.outputs.should_publish == 'true' && 
@@ -297,7 +297,7 @@ jobs:
 
   notify-release:
     name: Notify Release
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     needs: [validate-release, publish-pypi, create-github-release]
     if: always() && needs.validate-release.outputs.should_publish == 'true'
     

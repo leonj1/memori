@@ -29,7 +29,7 @@ env:
 
 jobs:
   validate-environment:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     outputs:
       api_key_valid: ${{ steps.validate.outputs.api_key_valid }}
       has_changes: ${{ steps.detect.outputs.has_changes }}
@@ -116,7 +116,7 @@ jobs:
   generate-docs:
     needs: validate-environment
     if: needs.validate-environment.outputs.has_changes == 'true' && needs.validate-environment.outputs.api_key_valid == 'true'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     permissions:
       contents: write
       pull-requests: write
